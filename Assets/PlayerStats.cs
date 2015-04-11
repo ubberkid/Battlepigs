@@ -8,7 +8,7 @@ public class PlayerStats : MonoBehaviour {
 	public int points;
 
 	public int hp;
-	public int level;
+	public int level = 1;
 	public int experience;
 	public int defense;
 	public int attack;
@@ -66,6 +66,7 @@ public class PlayerStats : MonoBehaviour {
 	}
 
 	public void bindPlayerData() {
+
 		// Set stats UI elements from local storage
 
 		// Bind players data to ui elements in the stats popup
@@ -73,6 +74,8 @@ public class PlayerStats : MonoBehaviour {
 		statsPopup.transform.FindChild("Attack").GetComponent<Text>().text = attack.ToString();
 		statsPopup.transform.FindChild("Special Attack").GetComponent<Text>().text = specialAttack.ToString();
 		statsPopup.transform.FindChild("Defense").GetComponent<Text>().text = defense.ToString();
+		statsPopup.transform.FindChild ("Points").GetComponent<Text> ().text = points.ToString ();
+
 	}
 
 	public void load() {
@@ -100,8 +103,13 @@ public class PlayerStats : MonoBehaviour {
 
 	public void addToStat(string stat) {
 
+		// Check if they have avaliable points
+		if (points < 1) {
+			return;
+		}
+
 		if (stat == "hp") {
-			hp += level;
+			hp += 10;
 		} else if (stat == "attack") {
 			attack += 1;
 		} else if (stat == "defense") {
@@ -109,6 +117,8 @@ public class PlayerStats : MonoBehaviour {
 		} else if (stat == "special attack") {
 			specialAttack += 1;
 		}
+
+		points -= 1;
 
 		save ();
 	}
