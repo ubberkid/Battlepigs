@@ -30,7 +30,6 @@ public class PlayerStats : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		save ();
 		load ();
 		bindPlayerData ();
 	}
@@ -59,6 +58,8 @@ public class PlayerStats : MonoBehaviour {
 		PlayerPrefs.SetInt("milesRan", milesRan);
 		PlayerPrefs.SetInt("caloriesBurned", caloriesBurned);
 		PlayerPrefs.SetInt("goalsFinished", goalsFinished);
+
+		PlayerPrefs.SetInt ("points", points);
 
 		bindPlayerData ();
 
@@ -94,6 +95,7 @@ public class PlayerStats : MonoBehaviour {
 		caloriesBurned = PlayerPrefs.GetInt("caloriesBurned");
 		goalsFinished = PlayerPrefs.GetInt("goalsFinished");
 
+		points = PlayerPrefs.GetInt ("points");
 	}
 
 	public void addToStat(string stat) {
@@ -110,4 +112,6 @@ public class PlayerStats : MonoBehaviour {
 
 		save ();
 	}
+
+
 }
