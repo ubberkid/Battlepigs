@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour {
 
 	// Player Stats
+	public string username;
+
 	public int points;
 
 	public int hp;
@@ -42,6 +44,7 @@ public class PlayerStats : MonoBehaviour {
 	public void save() {
 
 		// Save all of this to local storage
+		PlayerPrefs.SetString ("username", username);
 		PlayerPrefs.SetInt("hp", hp);
 		PlayerPrefs.SetInt("level", level);
 		PlayerPrefs.SetInt("experience", experience);
@@ -75,12 +78,14 @@ public class PlayerStats : MonoBehaviour {
 		statsPopup.transform.FindChild("Special Attack").GetComponent<Text>().text = specialAttack.ToString();
 		statsPopup.transform.FindChild("Defense").GetComponent<Text>().text = defense.ToString();
 		statsPopup.transform.FindChild ("Points").GetComponent<Text> ().text = points.ToString ();
+		statsPopup.transform.FindChild ("User").FindChild("Username").GetComponent<Text>().text = username.ToString();
 
 	}
 
 	public void load() {
 
 		// Load all data from local storage
+		username = PlayerPrefs.GetString ("username");
 		hp = PlayerPrefs.GetInt("hp");
 		level = PlayerPrefs.GetInt("level");
 		experience = PlayerPrefs.GetInt("experience");
@@ -122,6 +127,5 @@ public class PlayerStats : MonoBehaviour {
 
 		save ();
 	}
-
 
 }
