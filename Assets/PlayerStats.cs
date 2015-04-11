@@ -29,11 +29,18 @@ public class PlayerStats : MonoBehaviour {
 	public int goalsFinished;
 
 	public GameObject statsPopup;
+
+	lobby lobbyScript;
 	
 	// Use this for initialization
 	void Start () {
 		load ();
-		bindPlayerData ();
+
+		if (Application.loadedLevelName == "lobby") {
+			lobbyScript = GameObject.Find ("Game Controller").GetComponent<lobby>();
+			lobbyScript.bindPlayerData ();
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -64,22 +71,9 @@ public class PlayerStats : MonoBehaviour {
 
 		PlayerPrefs.SetInt ("points", points);
 
-		bindPlayerData ();
-
-	}
-
-	public void bindPlayerData() {
-
-		// Set stats UI elements from local storage
-
-		// Bind players data to ui elements in the stats popup
-		statsPopup.transform.FindChild("HP").GetComponent<Text>().text = hp.ToString();
-		statsPopup.transform.FindChild("Attack").GetComponent<Text>().text = attack.ToString();
-		statsPopup.transform.FindChild("Special Attack").GetComponent<Text>().text = specialAttack.ToString();
-		statsPopup.transform.FindChild("Defense").GetComponent<Text>().text = defense.ToString();
-		statsPopup.transform.FindChild ("Points").GetComponent<Text> ().text = points.ToString ();
-		statsPopup.transform.FindChild ("User").FindChild("Username").GetComponent<Text>().text = username.ToString();
-
+		if (Application.loadedLevelName == "lobby") {
+			lobbyScript.bindPlayerData ();
+		}
 	}
 
 	public void load() {
@@ -106,26 +100,6 @@ public class PlayerStats : MonoBehaviour {
 		points = PlayerPrefs.GetInt ("points");
 	}
 
-	public void addToStat(string stat) {
 
-		// Check if they have avaliable points
-		if (points < 1) {
-			return;
-		}
-
-		if (stat == "hp") {
-			hp += 10;
-		} else if (stat == "attack") {
-			attack += 1;
-		} else if (stat == "defense") {
-			defense += 1;
-		} else if (stat == "special attack") {
-			specialAttack += 1;
-		}
-
-		points -= 1;
-
-		save ();
-	}
 
 }

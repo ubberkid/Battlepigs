@@ -12,6 +12,8 @@ public class player : MonoBehaviour {
 
 	public PlayerStats playerStats;
 
+	public bool defending;
+
 	// AVATAR STATS
 	public int hat;
 	public int armor;
@@ -41,15 +43,23 @@ public class player : MonoBehaviour {
 	}
 
 	public void attack() {
-
+		// Play animation including attack in animation
 	}
 
 	public void defend() {
-
+		// Hold weapon close to body and no damage taken
+		defending = true;
 	}
 
 	public void takeDamage(int damageToTake) {
 		hp -= damageToTake;
+
+		if (localPlayer) {
+			GameObject.Find ("HP").GetComponent<Text> ().text = hp.ToString ();
+		} else {
+			GameObject.Find ("Enemy HP").GetComponent<Text> ().text = hp.ToString ();
+		}
+
 		checkForDeath ();
 	}
 
