@@ -16,4 +16,18 @@ public class lobby : MonoBehaviour {
 	public void loadScene(string level) {
 		Application.LoadLevel(level);
 	}
+
+	public void closeAllPopups() {
+		foreach(GameObject popup in GameObject.FindGameObjectsWithTag("popup")) {
+			popup.transform.localScale = Vector3.zero;
+		}
+	}
+
+	public void closePopup(string popup) {
+		GameObject.Find (popup).transform.localScale = Vector3.zero;
+	}
+
+	public void showPopup(string popup) {
+		GameObject.Find (popup).transform.localScale = Vector3.one;
+	}
 }
