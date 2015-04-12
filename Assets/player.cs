@@ -22,6 +22,10 @@ public class player : MonoBehaviour {
 	public int weapon;
 
 	public bool localPlayer;
+	public bool facingRight;
+	public bool stunned;
+
+	public float pigSpeed;
 
 	void Awake() {
 
@@ -40,6 +44,16 @@ public class player : MonoBehaviour {
 			transform.FindChild ("Shoes").GetComponent<Image> ().sprite = Resources.Load<Sprite> ("Avatar/Shoes/" + shoes) as Sprite;
 			transform.FindChild ("Weapon").GetComponent<Image> ().sprite = Resources.Load<Sprite> ("Avatar/Weapon/" + weapon) as Sprite;
 		}
+	}
+
+	public void walkForward() {
+
+		if (facingRight) {
+			GetComponent<Rigidbody2D> ().AddForce (new Vector2 (-pigSpeed * Time.deltaTime, 0f));
+		} else {
+			GetComponent<Rigidbody2D> ().AddForce (new Vector2 (pigSpeed * Time.deltaTime, 0f));
+		}
+
 	}
 
 	public void attack() {
@@ -81,7 +95,10 @@ public class player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+
+		if (!stunned) {
+			walkForward();
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
